@@ -10,7 +10,7 @@ def index():
 
 @app.route('/cloth/')
 def cloth():
-    _shoes = [
+    _cloth = [
         {
             "name": "Шапка-ушанка",
             "price": '4500 Р',
@@ -40,6 +40,22 @@ def shoes():
         },
     ]
     return render_template('shoes.html', content=_shoes)
+
+@app.route('/jacket/')
+def jacket():
+    _jacket = [
+        {
+            "name": "Жакет",
+            "price": '3500 Р',
+            "description": 'Разновидность короткой верхней (в основном — женской) одежды из трикотажа или шерстяной ткани. ',
+        },
+        {
+            "name": "Косуха",
+            "price": '2500 Р',
+            "description": 'Короткая кожаная куртка с зауженной талией и молнией наискосок ',
+        },
+    ]
+    return render_template('jacket.html', content=_jacket)
 
 
 if __name__ == '__main__':
