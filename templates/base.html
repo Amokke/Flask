@@ -2,72 +2,14 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <title>{% block title %} Shop {% endblock %}</title>
+    <title>
+    {% block title %}
+      Title
+    {% endblock %}
+    </title>
 </head>
 <body>
-<header>
-    {% block header %}
-    <p style="font-style:oblique">
-        Онлайн магазин
-    </p>
+    {% block content %}
     {% endblock %}
-</header>
-
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-    {% block nav %}
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#"> -> </a>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" href="{{ url_for('cloth') }}">Одежда</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="{{ url_for('shoes') }}">Обувь</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="{{ url_for('jacket') }}">Куртки</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('index') }}">Главная</a>
-                </li>
-
-            </ul>
-        </div>
-    </div>
-
-    {% endblock %}
-</nav>
-
-<main>
-    {% block main %}
-    <br>
-    {% for i in content %}
-    <div>
-        Название: {{ i.name }} <br>
-        Цена: {{ i.price }} <br>
-        Описание: {{ i.description }}<br>
-        <br>
-    </div>
-    {% endfor %}
-    {% endblock %}
-    <div>
-        {% if request.cookies.get('username') %}
-        <a href="/logout/">Выйти</a>
-        {% else %}
-
-        <a href="/login/">Войти</a>
-        {% endif %}
-    </div>
-</main>
-
-<footer>
-    {% block footer %}
-    <p>
-        <br><br>Данный сайт написан для учебной программы
-    </p>
-    {% endblock %}
-</footer>
 </body>
 </html>
