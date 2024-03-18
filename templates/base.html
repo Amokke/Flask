@@ -44,21 +44,29 @@
     {% block main %}
     <br>
     {% for i in content %}
-        <div>
-            Название: {{ i.name }} <br>
-            Цена: {{ i.price }} <br>
-            Описание: {{ i.description }}<br>
-            <br>
-        </div>
+    <div>
+        Название: {{ i.name }} <br>
+        Цена: {{ i.price }} <br>
+        Описание: {{ i.description }}<br>
+        <br>
+    </div>
     {% endfor %}
     {% endblock %}
+    <div>
+        {% if request.cookies.get('username') %}
+        <a href="/logout/">Выйти</a>
+        {% else %}
+
+        <a href="/login/">Войти</a>
+        {% endif %}
+    </div>
 </main>
 
 <footer>
     {% block footer %}
-        <p>
-            <br><br>Данный сайт написан для учебной программы
-        </p>
+    <p>
+        <br><br>Данный сайт написан для учебной программы
+    </p>
     {% endblock %}
 </footer>
 </body>

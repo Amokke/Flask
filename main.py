@@ -1,11 +1,18 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for, session, make_response, flash
+from markupsafe import escape
 
 app = Flask(__name__)
+app.secret_key = b'8tyMwiCQ-81EdKVtcRMqVKxtAlXgqQkZT0kDvVYG-gk'
 
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    if 'username' in session:
+        username = session['username']
+        mail = session['mail']
+        return render_template('index.html', username=username, mail=mail)
+    else:
+        return redirect(url_for('login'))
 
 
 @app.route('/cloth/')
@@ -41,6 +48,7 @@ def shoes():
     ]
     return render_template('shoes.html', content=_shoes)
 
+
 @app.route('/jacket/')
 def jacket():
     _jacket = [
@@ -56,6 +64,40 @@ def jacket():
         },
     ]
     return render_template('jacket.html', content=_jacket)
+
+
+@app.get('/login/')
+def checker_get():
+    return render_template('login.html')
+
+
+@app.post('/login/')
+def login():
+    if request.method == 'POST':
+        if not request.form['username']:
+            flash('Ошибка, не введено имя!', 'danger')
+            return redirect(url_for('login'))
+        if not request.form['mail']:
+            flash('Ошибка, не введена почта!', 'danger')
+            return redirect(url_for('login'))
+        session['username'] = escape(request.form.get('username'))
+        session['mail'] = escape(request.form.get('mail'))
+        response = make_response(render_template('index.html', username=session['username'], mail=session['mail']))
+        response.set_cookie('username', session['username'])
+        response.set_cookie('mail', session['mail'])
+        return response
+
+
+@app.route('/logout/')
+def logout():
+    session.pop('username', None)
+    session.pop('mail', None)
+    print(f'(Exit) username: {request.cookies.get("username")}')
+    print(f'mail: {request.cookies.get("mail")}')
+    response = make_response(render_template('login.html'))
+    response.delete_cookie("username")
+    response.delete_cookie("mail")
+    return response
 
 
 if __name__ == '__main__':
