@@ -21,6 +21,12 @@ async def receive():
     return {"user_list": users}
 
 
+@app.put("/users/{user_id}")
+async def updating(user_id: int, user: User):
+    users[user_id] = user
+    return {"user_id": user_id, "user": user}
+
+
 @app.post("/users/")
 async def create(user: User):
     users.append(user)
